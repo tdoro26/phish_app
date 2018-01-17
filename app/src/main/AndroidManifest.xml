@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.tom.myapplication">
+
+    <!-- Internet Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- All Customer Activity -->
+        <activity
+            android:name=".AllCustomersActivity"
+            android:label="All Products" />
+
+        <!-- Add Customer Activity -->
+        <activity
+            android:name=".NewCustomerActivity"
+            android:label="Add New Product" />
+
+        <!-- Edit Customer Activity -->
+        <activity
+            android:name=".EditCustomerActivity"
+            android:label="Edit Product" />
+        <activity
+            android:name=".StreamAudio"
+            android:label="@string/title_activity_stream_audio"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListShowsActivity"
+            android:label="@string/title_activity_list_shows"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListTracksActivity"
+            android:label="@string/title_activity_list_tracks"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListYearsActivity"
+            android:label="@string/title_activity_list_years"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>
