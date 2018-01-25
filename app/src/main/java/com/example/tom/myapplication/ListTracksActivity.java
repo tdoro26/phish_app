@@ -87,7 +87,7 @@ public class ListTracksActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("Song: " + titleTxView.getText() + " :  " + url);
-                Intent i = new Intent(getApplicationContext(), StreamAudio.class);
+                Intent i = new Intent(getApplicationContext(), NowPlayingActivity.class);
                 i.putExtra("URL", url);
                 startActivity(i);
             }

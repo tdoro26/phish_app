@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StreamAudio extends AppCompatActivity {
+public class NowPlayingActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
     private Button playTrack;
@@ -33,6 +33,10 @@ public class StreamAudio extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final String url = bundle.getString("URL");
 
+        Intent i = new Intent(AudioStreamService.ACTION_PLAY);  // getApplicationContext(), NowPlayingActivity.class);
+        i.putExtra("URL", url);
+        startService(i);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +49,8 @@ public class StreamAudio extends AppCompatActivity {
         //String url = "http://phishtracks.com/shows/2017-07-22/the-squirming-coil"; // your URL here
         //  Following URL works!
         //String url = "https://www.ssaurel.com/tmp/mymusic.mp3";
+        /*
+        ***MUSIC NO LONGER STREAMED FROM THIS ACTIVITY***
         mediaPlayer = new MediaPlayer();
         //String url = getIntent().getSerializableExtra("URL");
         //final String url = "http://phish.in/audio/000/017/963/17963.mp3";
@@ -63,7 +69,7 @@ public class StreamAudio extends AppCompatActivity {
             }
         };
         new Thread(loadThread).start();
-
+        */
 
 
 
