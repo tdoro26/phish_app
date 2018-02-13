@@ -33,9 +33,12 @@ public class NowPlayingActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final String url = bundle.getString("URL");
 
-        Intent i = new Intent(AudioStreamService.ACTION_PLAY);  // getApplicationContext(), NowPlayingActivity.class);
+        Intent i = new Intent(getApplicationContext(), AudioStreamService.class);  // getApplicationContext(), NowPlayingActivity.class);
+        //Intent i = new Intent(AudioStreamService.ACTION_PLAY);
         i.putExtra("URL", url);
-        startService(i);
+        i.setAction(AudioStreamService.ACTION_PLAY);
+        //i.setPackage("com.example.tom.myapplication.AudioStreamService");
+        getApplicationContext().startService(i);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -38,8 +38,8 @@
             android:name=".EditCustomerActivity"
             android:label="Edit Product" />
         <activity
-            android:name=".StreamAudio"
-            android:label="@string/title_activity_stream_audio"
+            android:name=".NowPlayingActivity"
+            android:label="NowPlayingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ListShowsActivity"
@@ -57,7 +57,11 @@
         <service
             android:name=".AudioStreamService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
