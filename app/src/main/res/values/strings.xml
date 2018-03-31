@@ -5,4 +5,5 @@
     <string name="title_activity_list_shows">ListShowsActivity</string>
     <string name="title_activity_list_tracks">ListTracks</string>
     <string name="title_activity_list_years">ListYearsActivity</string>
+    <string name="pause">Pause</string>
 </resources>

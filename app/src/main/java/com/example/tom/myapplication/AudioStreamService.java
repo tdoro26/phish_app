@@ -1,6 +1,7 @@
 package com.example.tom.myapplication;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -18,6 +19,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +28,10 @@ import java.util.List;
 public class AudioStreamService extends MediaBrowserServiceCompat {
     private static final String MY_MEDIA_ROOT_ID = "media_root_id";
     private static final String MY_EMPTY_MEDIA_ROOT_ID = "empty_root_id";
+    private static final int NOTIFICATION_ID = 412;
 
     private static final String LOG_TAG = "Creating MediaSessionCompat";
+    private static final String TAG = "AudioStreamService";
 
     private MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
@@ -66,6 +70,9 @@ public class AudioStreamService extends MediaBrowserServiceCompat {
         } else {
             // Clients can connect, but this BrowserRoot is an empty hierachy
             // so onLoadChildren returns nothing. This disables the ability to browse for content.
+            Log.i(TAG, "OnGetRoot: Browsing NOT ALLOWED for unknown caller. "
+                    + "Returning empty browser root so all apps can use MediaController."
+                    + clientPackageName);
             return new BrowserRoot(MY_EMPTY_MEDIA_ROOT_ID, null);
         }
     }
@@ -103,13 +110,17 @@ public class AudioStreamService extends MediaBrowserServiceCompat {
             return false;
     }
 
+
     private class MySessionCallback extends MediaSessionCompat.Callback {
+        // MAY NEED TO DEFINE ONPAUSE()
 
         @Override
         public void onPlay() {
             MediaControllerCompat controller = mMediaSession.getController();
             MediaMetadataCompat mediaMetadata = controller.getMetadata();
             MediaDescriptionCompat description = mediaMetadata.getDescription();
+
+            Context context = getApplicationContext();
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext()); // /*getContext()*/);
 
@@ -130,13 +141,13 @@ public class AudioStreamService extends MediaBrowserServiceCompat {
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
                     // Add an app icon and set its accent color
-                    .setSmallIcon(R.drawable.notification_icon)
-                    .setColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+                    .setSmallIcon(R.drawable.ic_notification)
+                    .setColor(ContextCompat.getColor(context /*this*/, R.color.colorPrimaryDark))
 
                     // Add a pause button
                     .addAction(new NotificationCompat.Action(
-                            R.drawable.pause, getString(R.string.pause),
-                            MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)))
+                            R.drawable.ic_pause_black_36dp, getString(R.string.pause),
+                            MediaButtonReceiver.buildMediaButtonPendingIntent(context /*this*/, PlaybackStateCompat.ACTION_PLAY_PAUSE)))
 
                     // Take advantage of MediaStyle features
                     .setStyle(new NotificationCompat.MediaStyle()
@@ -145,10 +156,10 @@ public class AudioStreamService extends MediaBrowserServiceCompat {
 
                     // Add a cancel button
                             .setShowCancelButton(true)
-                            .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_STOP)));
+                            .setCancelButtonIntent(MediaButtonReceiver.buildMediaButtonPendingIntent(context /*this*/, PlaybackStateCompat.ACTION_STOP)));
 
             // Display the notification and place the service in the foreground
-            startForeground(id, builder.build());
+            startForeground(NOTIFICATION_ID, builder.build());
         }
 
     }
